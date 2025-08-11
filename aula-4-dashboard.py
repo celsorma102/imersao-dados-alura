@@ -132,6 +132,20 @@ with col_graf4:
     else:
         st.warning("Nenhum dado para exibir no gráfico de países.")
 
+# Adicionando meu resultado do desafio da aula 3 com o grafico de top 10
+df_data_scientist = df_filtrado[df_filtrado['cargo'] == 'Data Scientist']
+df_data_scientist = df_data_scientist.groupby('residencia_iso3')['usd'].mean().sort_values(ascending=False).reset_index()
+df_data_scientist = df_data_scientist.head(10)
+grafico_top10 = px.bar(df_data_scientist,
+                             x='residencia_iso3',
+                             y='usd',
+                             title='Top 10 - Média salarial por país de um Cientista de Dados (Ano)',
+                             labels={'usd':'Salário médio (USD)','residencia_iso3':'País'}
+
+)
+grafico_top10.update_layout(title_x=0.1)
+st.plotly_chart(grafico_top10, use_container_width=True)
+
 # Tabela de Dados Detalhados
 st.subheader("Dados Detalhados")
 st.dataframe(df_filtrado)
